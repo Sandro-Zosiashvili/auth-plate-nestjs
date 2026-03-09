@@ -11,11 +11,12 @@ export class UserRepository {
     private userRepository: Repository<User>,
   ) {}
 
-  const = 5;
-
-  create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto) {
     const user = this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    const savedUser = await this.userRepository.save(user);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...withoutPassword } = savedUser;
+    return withoutPassword;
   }
 
   async findAll() {
