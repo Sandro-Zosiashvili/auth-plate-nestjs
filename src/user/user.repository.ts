@@ -45,4 +45,11 @@ export class UserRepository {
     }
     return user;
   }
+
+  async findByEmail(email: string) {
+    return this.userRepository
+      .createQueryBuilder('user')
+      .where('user.email = :email', { email: email })
+      .getOne();
+  }
 }
