@@ -18,9 +18,7 @@ export class AuthGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException('Token not found');
     }
-
     try {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       request['user'] = await this.jwtService.verifyAsync(token);
       return true;
     } catch {
