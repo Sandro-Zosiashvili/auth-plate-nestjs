@@ -11,7 +11,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
   imports: [
     UserModule,
     PassportModule,
-    TypeOrmModule.forFeature([User]), // ✅ ეს დაამატე
+    TypeOrmModule.forFeature([User]),
     JwtModule.register({
       secret: process.env.JWT_SECRET ?? '<JWT_SECRET>',
       signOptions: { expiresIn: '1h' },

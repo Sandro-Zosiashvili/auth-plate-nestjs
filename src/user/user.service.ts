@@ -8,15 +8,14 @@ import * as bcrypt from 'bcrypt';
 export class UserService {
   constructor(private userRepo: UserRepository) {}
 
-  async create(createUserDto: CreateUserDto) {
-    // 1️⃣ hash პაროლის
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    const userToSave = {
-      ...createUserDto,
-      password: hashedPassword,
-    };
-    return this.userRepo.create(userToSave);
-  }
+  // async create(createUserDto: CreateUserDto) {
+  //   const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+  //   const userToSave = {
+  //     ...createUserDto,
+  //     password: hashedPassword,
+  //   };
+  //   return this.userRepo.create(userToSave);
+  // }
 
   findAll() {
     return this.userRepo.findAll();
