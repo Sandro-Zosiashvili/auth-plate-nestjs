@@ -16,15 +16,18 @@ export class AuthService {
     const user = await this.userRepo.findByEmail(data.email);
 
     if (!user) {
-      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-    }
-    if (!user.isAdmin) {
-      throw new HttpException('Admin access only', HttpStatus.FORBIDDEN);
+      throw new HttpException(
+        'Invalid email or password',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
 
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) {
-      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+      throw new HttpException(
+        'Invalid email or password',
+        HttpStatus.UNAUTHORIZED,
+      );
     }
     const payload = { id: user.id, email: user.email, isAdmin: user.isAdmin };
 

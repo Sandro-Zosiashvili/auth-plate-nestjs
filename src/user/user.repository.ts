@@ -22,6 +22,13 @@ export class UserRepository {
   async findAll() {
     const users = await this.userRepository
       .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.name',
+        'user.email',
+        'user.isAdmin',
+        'user.createdAt',
+      ])
       .getMany();
     if (!users) {
       throw new NotFoundException({
@@ -35,6 +42,13 @@ export class UserRepository {
   async findOne(id: number) {
     const user = await this.userRepository
       .createQueryBuilder('user')
+      .select([
+        'user.id',
+        'user.name',
+        'user.email',
+        'user.isAdmin',
+        'user.createdAt',
+      ])
       .where('user.id = :id', { id: id })
       .getOne();
     if (!user) {
