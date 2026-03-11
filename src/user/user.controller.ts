@@ -17,11 +17,7 @@ import { AdminGuard } from '../auth/auth.adminGuard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  // @Post()
-  // create(@Body() createUserDto: CreateUserDto) {
-  //   return this.userService.create(createUserDto);
-  // }
-  //
+  @UseGuards(AuthGuard, AdminGuard)
   @Get()
   findAll() {
     return this.userService.findAll();
@@ -29,10 +25,13 @@ export class UserController {
 
   @UseGuards(AuthGuard)
   @Get('me')
-  getMe(@Req() req: string) {
-    // return this.userService.findOne(req.user.);
-    console.log(req);
-    return 'Hello';
+  getMe(@Req() req: Record<string, unknown>) {
+    const user = req['user'] as {
+      id: number;
+      email: string;
+      isAdmin: boolean;
+    };
+    return this.userService.findOne(user.id);
   }
 
   @UseGuards(AuthGuard, AdminGuard)
@@ -41,11 +40,13 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
+  @UseGuards(AuthGuard, AdminGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
   }
 
+  @UseGuards(AuthGuard, AdminGuard)
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.userService.remove(+id);

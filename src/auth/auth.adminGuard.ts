@@ -16,8 +16,6 @@ export class AdminGuard implements CanActivate {
       email: string;
       isAdmin: boolean;
     };
-    console.log(user);
-
     if (!user?.isAdmin) {
       throw new ForbiddenException('Admin access only');
     }
