@@ -18,11 +18,15 @@ export class AuthService {
     if (!user) {
       throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
+    if (!user.isAdmin) {
+      throw new HttpException('Admin access only', HttpStatus.FORBIDDEN);
+    }
+
     const isPasswordValid = await bcrypt.compare(data.password, user.password);
     if (!isPasswordValid) {
       throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
     }
-    const payload = { id: user.id, email: user.email };
+    const payload = { id: user.id, email: user.email, isAdmin: user.isAdmin };
 
     return {
       access_token: await this.jwtService.signAsync(payload),
