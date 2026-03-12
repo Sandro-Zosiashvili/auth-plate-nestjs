@@ -11,7 +11,7 @@ export class User {
   @Column({ type: 'boolean', default: false })
   isAdmin: boolean;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
