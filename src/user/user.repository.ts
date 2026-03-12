@@ -12,7 +12,10 @@ export class UserRepository {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const user = this.userRepository.create(createUserDto);
+    const user = this.userRepository.create({
+      ...createUserDto,
+      isAdmin: false,
+    });
     const savedUser = await this.userRepository.save(user);
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password, ...withoutPassword } = savedUser;
