@@ -12,16 +12,16 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  // app.enableCors({
-  //   origin: [process.env.WEB],
-  //   credentials: true,
-  // });
   app.enableCors({
-    origin: true, // დროებით ყველა origin-ს დაუშვებს — ტესტისთვის
+    origin: [process.env.WEB],
     credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
   });
+  // app.enableCors({
+  //   origin: true, // დროებით ყველა origin-ს დაუშვებს — ტესტისთვის
+  //   credentials: true,
+  //   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+  //   allowedHeaders: ['Content-Type', 'Authorization'],
+  // });
   await app.listen(process.env.PORT ?? 3000);
 }
 
