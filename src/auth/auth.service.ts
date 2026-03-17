@@ -12,7 +12,7 @@ export class AuthService {
     private readonly userRepo: UserRepository,
   ) {}
 
-  async userLogin(data: CreateAuthDto) {
+  async adminLogin(data: CreateAuthDto) {
     const user = await this.userRepo.findByEmail(data.email);
 
     if (!user) {
@@ -44,5 +44,22 @@ export class AuthService {
       ...data,
       password: hashedPassword,
     });
+  }
+
+  async userLogin(data: CreateAuthDto) {
+    const user = await this.userRepo.findByEmail(data.email);
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    const isPasswordValid = await bcrypt.compare(data.password, user.password);
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+    }
+    const payload = { id: user.id };
+
+    return {
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }
