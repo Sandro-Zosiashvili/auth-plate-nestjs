@@ -55,4 +55,5 @@ export class UserRepository {
       .where('user.email = :email', { email: email })
       .getOne();
   }
+
 }

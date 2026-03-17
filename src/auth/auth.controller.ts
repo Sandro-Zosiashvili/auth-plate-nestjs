@@ -12,7 +12,12 @@ export class AuthController {
     return this.authService.userRegister(data);
   }
 
-  @Post('login')
+  @Post('admin/login')
+  adminLogin(@Body() data: CreateAuthDto) {
+    return this.authService.adminLogin(data);
+  }
+
+  @Post('user/login')
   userLogin(@Body() data: CreateAuthDto) {
     return this.authService.userLogin(data);
   }
