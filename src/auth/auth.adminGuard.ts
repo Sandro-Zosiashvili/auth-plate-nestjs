@@ -8,22 +8,6 @@ import {
 import { Request } from 'express';
 import { UserRepository } from '../user/user.repository';
 
-// @Injectable()
-// export class AdminGuard implements CanActivate {
-//   canActivate(context: ExecutionContext): boolean {
-//     const request = context.switchToHttp().getRequest<Request>();
-//     const user = request['user'] as {
-//       id: number;
-//       email: string;
-//       isAdmin: boolean;
-//     };
-//     if (!user?.isAdmin) {
-//       throw new ForbiddenException('Admin access only');
-//     }
-//
-//     return true;
-//   }
-// }
 @Injectable()
 export class AdminGuard implements CanActivate {
   constructor(private readonly userRepo: UserRepository) {}
