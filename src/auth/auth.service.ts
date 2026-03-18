@@ -62,4 +62,9 @@ export class AuthService {
       access_token: await this.jwtService.signAsync(payload),
     };
   }
+
+  async getMe(userId: number) {
+    const user = await this.userRepo.findOne(userId);
+    return { isAdmin: user.isAdmin };
+  }
 }
